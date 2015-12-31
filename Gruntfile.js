@@ -9,6 +9,18 @@
 
 module.exports = function (grunt) {
 
+  // Load grunt tasks automatically, when needed
+  require('jit-grunt')(grunt, {
+    express: 'grunt-express-server',
+    useminPrepare: 'grunt-usemin',
+    ngtemplates: 'grunt-angular-templates',
+    cdnify: 'grunt-google-cdn',
+    protractor: 'grunt-protractor-runner',
+    buildcontrol: 'grunt-build-control',
+    istanbul_check_coverage: 'grunt-mocha-istanbul',
+    ngconstant: 'grunt-ng-constant'
+  });
+
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
 
@@ -27,6 +39,17 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
+    express: {
+      options: {
+        port: process.env.PORT || 9000
+      },
+      dev: {
+        options: {
+          script: 'app/server',
+          debug: true
+        }
+      }
+    },
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -407,4 +430,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.registerTask('express', ['express:dev']);
 };
