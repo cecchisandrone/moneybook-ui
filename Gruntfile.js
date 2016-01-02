@@ -46,13 +46,13 @@ module.exports = function (grunt) {
       },
       dev: {
         options: {
-          script: 'server',
+          script: '<%= yeoman.server %>',
           debug: true
         }
       },
       prod: {
         options: {
-          script: '<%= yeoman.dist %>/<%= yeoman.server %>'
+          script: '<%= yeoman.server %>'
         }
       }
     },
@@ -66,7 +66,7 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
         tasks: ['newer:jshint:all'],
         options: {
-          livereload: '<%= connect.options.livereload %>'
+          livereload: true
         }
       },
       jsTest: {
@@ -92,12 +92,11 @@ module.exports = function (grunt) {
       },
       express: {
         files: ['<%= yeoman.server %>/**/*.{js,json}'],
-        tasks: ['express:dev', 'wait'],
+        tasks: ['express:dev','wait'],
         options: {
-          livereload: true,
           spawn: false //Without this option specified express won't be reloaded
         }
-      },
+      }
     },
 
     
@@ -358,7 +357,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'express-keepalive']);
+      return grunt.task.run(['build', 'express:prod', 'express-keepalive']);
     }
 
     grunt.task.run([
@@ -375,7 +374,7 @@ module.exports = function (grunt) {
     'clean:server',
     'concurrent:test',
     'autoprefixer',
-    'connect:test',
+    'express:test',
     'karma'
   ]);
 
