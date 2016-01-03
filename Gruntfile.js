@@ -54,6 +54,11 @@ module.exports = function (grunt) {
         options: {
           script: '<%= yeoman.server %>'
         }
+      },
+      test: {
+        options: {
+          script: '<%= yeoman.server %>'
+        }
       }
     },
     // Watches files for changes and runs tasks based on the changed files
@@ -98,7 +103,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
     
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
@@ -347,8 +351,13 @@ module.exports = function (grunt) {
 
     // Test settings
     karma: {
-      unit: {
+      options : {
         configFile: 'test/karma.conf.js',
+      },
+      unit: {        
+        singleRun: false
+      },
+      ci: {        
         singleRun: true
       }
     }
