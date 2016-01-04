@@ -9,7 +9,7 @@ module.exports = {
     uri: 'sqlite://',
     options: {
       logging: false,
-      storage: 'dev.sqlite',
+      storage: 'db/dev.sqlite',
       define: {
         timestamps: false
       }

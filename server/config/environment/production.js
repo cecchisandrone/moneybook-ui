@@ -18,7 +18,7 @@ module.exports = {
           'sqlite://',
     options: {
       logging: false,
-      storage: 'dist.sqlite',
+      storage: 'db/dist.sqlite',
       define: {
         timestamps: false
       }

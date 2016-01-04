@@ -7,10 +7,8 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('MainCtrl', function($scope) {
-  	$scope.awesomeThings = [1, 2, 3];
-
-  	$scope.add = function() {
+  .controller('ImportCtrl', function ($scope, $http) {
+     $scope.add = function() {
         var f = document.getElementById('file').files[0];
         var r = new FileReader();
         r.onloadend = function(e) {
@@ -21,4 +19,4 @@ angular.module('sbAdminApp')
         };
         r.readAsBinaryString(f);
     };
-  });
+});
