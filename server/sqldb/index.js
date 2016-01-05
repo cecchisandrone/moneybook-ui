@@ -8,8 +8,7 @@ var config = require('../config/environment');
 var Sequelize = require('sequelize');
 
 var db = {
-  Sequelize,
-  sequelize: new Sequelize(config.sequelize.uri, config.sequelize.options)
+    sequelize: new Sequelize(config.sequelize.uri, config.sequelize.options)
 };
 
 // Insert models below
