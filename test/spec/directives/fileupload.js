@@ -2,7 +2,7 @@
 
 describe('Directive: fileUpload', function () {
 
-    var $compile, $scope;
+    var $compile, $scope, element;
 
     // load the controller's module
     beforeEach(function() {
@@ -14,13 +14,16 @@ describe('Directive: fileUpload', function () {
     beforeEach(inject(function(_$compile_, _$rootScope_) {
         $compile = _$compile_;
         $scope = _$rootScope_.$new();
+        element = $compile("<file-upload></file-upload>")($scope);
+        $scope.$digest();
     }));
 
     it('should initialize with disabled upload button', function () {
-        var element = $compile("<file-upload></file-upload>")($scope);
-        // fire all the watches
-        $scope.$digest();
-        // Check that the compiled element contains the templated content
-        console.log(element.html());
+        expect(element.find('button')).not.toBeVisible();
+    });
+
+    it('should initialize with disabled upload button', function () {
+        element.find('button').triggerHandler('click');
+        expect(element.find('button')).not.toBeVisible();
     });
 });

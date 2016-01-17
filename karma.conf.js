@@ -14,7 +14,7 @@ module.exports = function (config) {
         basePath: '',
 
         // testing framework to use (jasmine/mocha/qunit/...)
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine-jquery','jasmine'],
 
         // list of files / patterns to load in the browser
         files: [
@@ -58,6 +58,7 @@ module.exports = function (config) {
             'karma-phantomjs-launcher',
             'karma-chrome-launcher',
             'karma-jasmine',
+            'karma-jasmine-jquery',
             'karma-ng-html2js-preprocessor'
         ],
 

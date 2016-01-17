@@ -137,7 +137,8 @@ angular
                 name:'sbAdminApp',
                 files:[
                     'scripts/controllers/importController.js',
-                    'scripts/directives/fileupload/fileupload.js'
+                    'scripts/directives/fileupload/fileupload.js',
+                    'scripts/directives/file/file.js'
                 ]
             });
           }

@@ -1,4 +1,4 @@
-<div>
-    <input type="file" id="file" name="file"/>
-    <button ng-click="upload()">Upload</button>
+<div>	
+    <input type="file" file='file'/>
+    <button ng-click="upload(file)" ng-if='file'>Upload</button>
 </div>
