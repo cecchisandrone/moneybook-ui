@@ -14,7 +14,7 @@ describe('Directive: fileUpload', function () {
     beforeEach(inject(function(_$compile_, _$rootScope_) {
         $compile = _$compile_;
         $scope = _$rootScope_.$new();
-        element = $compile("<file-upload></file-upload>")($scope);
+        element = $compile('<file-upload></file-upload>')($scope);
         $scope.$digest();
     }));
 

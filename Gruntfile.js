@@ -9,6 +9,13 @@
 
 module.exports = function (grunt) {
 
+    var localConfig;
+    try {
+        localConfig = require('./server/config/local.env');
+    } catch(e) {
+        localConfig = {};
+    }
+
     // Load grunt tasks automatically, when needed
     require('jit-grunt')(grunt, {
         express: 'grunt-express-server',
@@ -17,7 +24,9 @@ module.exports = function (grunt) {
         cdnify: 'grunt-google-cdn',
         protractor: 'grunt-protractor-runner',
         buildcontrol: 'grunt-build-control',
-        ngconstant: 'grunt-ng-constant'
+        ngconstant: 'grunt-ng-constant',
+        jasmine_node: 'grunt-jasmine-nodejs',
+        grunt_env: 'grunt-env'
     });
 
     // Load grunt tasks automatically
@@ -60,6 +69,17 @@ module.exports = function (grunt) {
                 }
             }
         },
+
+        env: {
+            test: {
+                NODE_ENV: 'test'
+            },
+            prod: {
+                NODE_ENV: 'production'
+            },
+            all: localConfig
+        },
+
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             bower: {
@@ -76,6 +96,10 @@ module.exports = function (grunt) {
             jsTest: {
                 files: ['test/spec/{,*/}*.js'],
                 tasks: ['newer:jshint:test', 'karma']
+            },
+            jsTestServer: {
+                files: ['test/spec/{,*/}*.js'],
+                tasks: ['env:test', 'newer:jshint:test', 'jasmine_nodejs:all']
             },
             styles: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
@@ -351,13 +375,45 @@ module.exports = function (grunt) {
         // Test settings
         karma: {
             options: {
-                configFile: 'test/karma.conf.js',
+                configFile: 'karma.conf.js',
             },
             unit: {
                 autoWatch: true
             }
+        },
+        jasmine_nodejs: {
+            // task specific (default) options 
+            options: {
+                specNameSuffix: ["spec.js", "integration.js"], // also accepts an array
+                helperNameSuffix: "helper.js",
+                useHelpers: false,
+                stopOnFailure: false,
+                // configure one or more built-in reporters 
+                reporters: {
+                    console: {
+                        colors: true,
+                        cleanStack: 1,       // (0|false)|(1|true)|2|3 
+                        verbosity: 4,        // (0|false)|1|2|3|(4|true) 
+                        listStyle: "indent", // "flat"|"indent" 
+                        activity: false
+                    }
+                },
+                // add custom Jasmine reporter(s) 
+                customReporters: []
+            },
+        all: {
+            // target specific options 
+            options: {
+                useHelpers: false
+            },
+            // spec files 
+            specs: [
+                "test/spec/api/**"
+            ]
         }
-    });
+
+    }
+});
 
 
     grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
@@ -367,7 +423,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
-            'concurrent:server',
+           // 'concurrent:server',
             'autoprefixer',
             'express:dev',
             'wait',
